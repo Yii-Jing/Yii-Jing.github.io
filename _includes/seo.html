@@ -39,7 +39,7 @@
   {% assign seo_author_twitter = seo_author_twitter | replace: "@", "" %}
 {% endif %}
 
-<meta property="og:locale" content="{{ site.locale | default: "en" }}">
+<meta property="og:locale" content="{% if page.lang == 'zh' %}zh_CN{% else %}en_US{% endif %}">
 <meta property="og:site_name" content="{{ site.title }}">
 <meta property="og:title" content="{{ page.title | default: site.title | markdownify | strip_html | strip_newlines | escape_once }}">
 
@@ -48,8 +48,17 @@
   <meta property="og:url" content="{{ page.url | prepend: seo_url | replace: "/index.html", "/" }}">
 {% endif %}
 
-{% if page.excerpt %}
-  <meta property="og:description" name="description" content="{{ seo_description }}">
+{% if seo_description %}
+  <meta name="description" content="{{ seo_description }}">
+  <meta property="og:description" content="{{ seo_description }}">
+{% endif %}
+
+{% if page.translation_key %}
+  {% assign seo_translations = site.posts | where: 'translation_key', page.translation_key %}
+  {% for translation in seo_translations %}
+  <link rel="alternate" hreflang="{{ translation.lang }}" href="{{ translation.url | absolute_url }}">
+  {% if translation.lang == 'en' %}<link rel="alternate" hreflang="x-default" href="{{ translation.url | absolute_url }}">{% endif %}
+  {% endfor %}
 {% endif %}
 
 {% if site.twitter.username %}

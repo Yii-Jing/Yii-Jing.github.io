@@ -1,27 +1,6 @@
 ---
-layout: default
+layout: research-base
 ---
-
-{% include base_path %}
-
-<main class="research-site" role="main">
+<main id="content" class="research-site" tabindex="-1">
   {{ content }}
 </main>
-
-<script>
-  (function () {
-    var els = document.querySelectorAll('.research-reveal');
-    if (!els.length) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce || !('IntersectionObserver' in window)) {
-      els.forEach(function (el) { el.classList.add('is-visible'); });
-      return;
-    }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.12 });
-    els.forEach(function (el) { io.observe(el); });
-  })();
-</script>

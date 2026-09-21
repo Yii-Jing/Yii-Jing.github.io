@@ -1,6 +1,7 @@
 ---
 title: "HistLens: Mapping Idea Change across Concepts and Corpora"
 collection: publications
+featured: true
 category: conferences
 permalink: /publication/2026-04-13-histlens-mapping-idea-change-across-concepts-and-corpora
 excerpt: 'Accepted at ACL 2026 Main Conference. Code available on GitHub.'

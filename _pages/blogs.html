@@ -1,104 +1,54 @@
 ---
 layout: research
-title: "Blogs"
+title: "Blog"
+description: "Research notes and essays by Yi Jing on LLM agents, reinforcement learning, language, and thought. Available in English and Chinese."
 permalink: /blogs/
 author_profile: false
 ---
 
-<section class="research-page-heading">
-  <p class="research-eyebrow">Writing</p>
-  <h1>Blogs</h1>
-  <p>
-    Notes, essays, and research-adjacent writing.
-  </p>
+<section class="writing-heading">
+  <div>
+    <h1>Writing</h1>
+    <p>Learning systems, language, and the ideas in between.</p>
+  </div>
+  <a class="quiet-link" href="{{ '/feed.xml' | relative_url }}" title="Subscribe via RSS"><i class="fas fa-rss" aria-hidden="true"></i> RSS</a>
 </section>
 
-{% assign posts = site.posts | sort: "date" | reverse %}
-{% if posts.size > 0 %}
-  <section class="research-section research-section--first">
-    <div class="research-list research-list--flush">
-      {% assign rendered_translation_keys = "" %}
-      {% for post in posts %}
-        {% assign post_key = post.translation_key | default: post.url %}
-        {% assign post_key_marker = "|" | append: post_key | append: "|" %}
-        {% unless rendered_translation_keys contains post_key_marker %}
-        {% assign rendered_translation_keys = rendered_translation_keys | append: post_key_marker %}
-        {% assign zh_post = false %}
-        {% assign en_post = false %}
-        {% for candidate in posts %}
-          {% assign candidate_key = candidate.translation_key | default: candidate.url %}
-          {% if candidate_key == post_key %}
-            {% if candidate.lang == "en" %}
-              {% assign en_post = candidate %}
-            {% else %}
-              {% assign zh_post = candidate %}
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-        {% assign display_post = post %}
-        {% if zh_post %}
-          {% assign display_post = zh_post %}
-        {% endif %}
-        <article class="research-item research-post">
-          <p class="research-item__meta">
-            <time datetime="{{ display_post.date | date_to_xmlschema }}">{{ display_post.date | date: "%B %-d, %Y" }}</time>
-          </p>
-          <h2><a href="{{ display_post.url | relative_url }}">{{ display_post.title }}</a></h2>
-          {% if zh_post and en_post %}
-            <nav class="research-language-switch research-language-switch--list" aria-label="Language versions">
-              <span class="research-language-switch__icon" aria-hidden="true">文</span>
-              {% if zh_post %}
-                <a href="{{ zh_post.url | relative_url }}" {% if display_post.url == zh_post.url %}aria-current="page"{% endif %}>中</a>
-              {% endif %}
-              {% if en_post %}
-                <a href="{{ en_post.url | relative_url }}" {% if display_post.url == en_post.url %}aria-current="page"{% endif %}>EN</a>
-              {% endif %}
-            </nav>
-          {% endif %}
-          {% if display_post.excerpt %}
-            <p>{{ display_post.excerpt | markdownify | strip_html | strip | truncate: 220 }}</p>
-          {% endif %}
-          {% if display_post.tags and display_post.tags.size > 0 %}
-            {% capture visible_tags %}
-              {% for tag in display_post.tags %}
-                {% unless tag == "Chinese" or tag == "English" %}
-                  <span>{{ tag }}</span>
-                {% endunless %}
-              {% endfor %}
-            {% endcapture %}
-            {% assign visible_tags = visible_tags | strip %}
-            {% if visible_tags != "" %}
-            <div class="research-tags" aria-label="Tags">
-              {{ visible_tags }}
+<div class="writing-toolbar">
+  <span class="writing-count">{% assign translation_keys = site.posts | map: 'translation_key' | uniq %}{{ translation_keys.size }} pieces</span>
+  <div class="language-options" role="group" aria-label="Article language" hidden>
+    <button type="button" data-writing-language="en" aria-pressed="true">English</button>
+    <button type="button" data-writing-language="zh" aria-pressed="false">中文</button>
+  </div>
+</div>
+
+<section class="writing-list" aria-label="Articles">
+  {% assign ordered_posts = site.posts | sort: 'date' | reverse %}
+  {% assign seen_keys = '' %}
+  {% for post in ordered_posts %}
+    {% assign key = post.translation_key | default: post.url %}
+    {% assign marker = key | prepend: '|' | append: '|' %}
+    {% unless seen_keys contains marker %}
+      {% assign seen_keys = seen_keys | append: marker %}
+      <article class="writing-entry">
+        {% assign versions = site.posts | where: 'translation_key', key | sort: 'lang' %}
+        {% if versions.size == 0 %}{% assign versions = ordered_posts | where: 'url', post.url %}{% endif %}
+        {% for version in versions %}
+          <div class="writing-version" lang="{{ version.lang | default: 'en' }}" data-post-language="{{ version.lang | default: 'en' }}" {% unless forloop.first %}hidden{% endunless %}>
+            <div class="post-meta">
+              <span class="post-kind {% if version.kind == 'essay' %}post-kind--essay{% endif %}">{{ version.kind_label | default: 'Note' }}</span>
+              <time datetime="{{ version.date | date_to_xmlschema }}">{{ version.date | date: '%Y.%m.%d' }}</time>
+              <span>{% include research-reading-time.html post=version %}</span>
             </div>
-            {% endif %}
-          {% endif %}
-        </article>
-        {% endunless %}
-      {% endfor %}
-    </div>
-  </section>
-{% else %}
-  <section class="research-section research-section--first">
-    <div class="research-list research-list--flush">
-      <article class="research-item research-post">
-        <p class="research-item__meta">Draft placeholder</p>
-        <h2>Mechanistic interpretability notes</h2>
-        <p>Replace this placeholder with a short note on sparse representations, circuits, or model behavior.</p>
-        <div class="research-tags"><span>Interpretability</span><span>Draft</span></div>
+            <h2><a href="{{ version.url | relative_url }}">{{ version.title }} <i class="fas fa-arrow-right entry-arrow" aria-hidden="true"></i></a></h2>
+            <p class="writing-excerpt">{{ version.excerpt | strip_html }}</p>
+            <div class="writing-entry__bottom">
+              <span class="writing-topics">{% for tag in version.tags %}{{ tag }}{% unless forloop.last %}<span aria-hidden="true"> / </span>{% endunless %}{% endfor %}</span>
+              {% for alternate in versions %}{% unless alternate.url == version.url %}<a class="translation-link" href="{{ alternate.url | relative_url }}" lang="{{ alternate.lang }}" hreflang="{{ alternate.lang }}">{% if alternate.lang == 'en' %}Read in English{% else %}中文版{% endif %} <i class="fas fa-arrow-right" aria-hidden="true"></i></a>{% endunless %}{% endfor %}
+            </div>
+          </div>
+        {% endfor %}
       </article>
-      <article class="research-item research-post">
-        <p class="research-item__meta">Draft placeholder</p>
-        <h2>Post-training reading log</h2>
-        <p>Replace this placeholder with a reading log or experiment report on RL, preference optimization, or data quality.</p>
-        <div class="research-tags"><span>Post-training</span><span>Draft</span></div>
-      </article>
-      <article class="research-item research-post">
-        <p class="research-item__meta">Draft placeholder</p>
-        <h2>AI for research systems</h2>
-        <p>Replace this placeholder with a systems note on research agents, literature workflows, or tool-building.</p>
-        <div class="research-tags"><span>AI for Research</span><span>Draft</span></div>
-      </article>
-    </div>
-  </section>
-{% endif %}
+    {% endunless %}
+  {% endfor %}
+</section>

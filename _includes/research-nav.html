@@ -1,0 +1,15 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-name" href="{{ '/' | relative_url }}">Yi Jing<span class="site-name__dot" aria-hidden="true">.</span></a>
+    <nav class="site-navigation" aria-label="Main navigation">
+      <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}aria-current="page"{% endif %}>About</a>
+      <a href="{{ '/publications/' | relative_url }}" {% if page.url contains '/publication' %}aria-current="page"{% endif %}>Publications</a>
+      <a href="{{ '/blogs/' | relative_url }}" {% if page.url contains '/blogs/' or page.url contains '/posts/' %}aria-current="page"{% endif %}>Blog</a>
+      <a href="{{ '/honors/' | relative_url }}" {% if page.url == '/honors/' %}aria-current="page"{% endif %}>Honors</a>
+    </nav>
+    <button class="icon-button theme-toggle" type="button" aria-label="Switch color theme" title="Switch color theme" hidden>
+      <i class="fas fa-moon" aria-hidden="true"></i>
+    </button>
+  </div>
+  {% if page.translation_key %}<div class="reading-progress" aria-hidden="true"><span></span></div>{% endif %}
+</header>

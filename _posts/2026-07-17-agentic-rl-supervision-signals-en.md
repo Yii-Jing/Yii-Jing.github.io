@@ -4,6 +4,12 @@ date: 2026-07-17
 permalink: /posts/2026/07/agentic-rl-supervision-signals-en/
 lang: en
 translation_key: agentic-rl-supervision-signals
+kind: research
+reading_minutes: 29
+kind_label: Research note
+subtitle: "The agent training loop through reward, state, and credit"
+toc: true
+math: true
 excerpt: "Understanding the agent training loop through Reward, State, and Credit: Reward sets the direction of learning, State sets where training happens, and Credit decides which actions the outcome is attributed to."
 tags:
   - Post-training
@@ -11,11 +17,15 @@ tags:
   - Reinforcement Learning
 ---
 
-> **Understanding the agent training loop through Reward, State, and Credit**
-
 ## TL;DR
 
-Agent training can be unfolded through three questions — Reward, State, and Credit: how to define the objective using environment results, how to make the training data cover the states the current policy actually visits, and how to attribute a delayed outcome to specific actions. Together, the three determine whether the training loop can produce a reliable, sustainable learning signal.
+<dl class="concept-map">
+  <div><dt><span>01</span> Reward</dt><dd>Anchor the objective in real environment outcomes: what should the policy learn?</dd></div>
+  <div><dt><span>02</span> State</dt><dd>Cover the states the current policy actually visits, connecting training to deployment.</dd></div>
+  <div><dt><span>03</span> Credit</dt><dd>Attribute delayed outcomes to specific actions, identifying which decisions to reinforce.</dd></div>
+</dl>
+
+Together, the three determine whether the training loop can produce a reliable, sustainable learning signal.
 
 ---
 
@@ -266,13 +276,11 @@ The different layers of this framework solve different problems. They cannot be 
 
 Training can use a hierarchical objective:
 
-$$
-\text{satisfy Constraints first}
-\;\rightarrow\;
-\text{then maximize Task Success}
-\;\rightarrow\;
-\text{finally optimize Preference and Cost}
-$$
+<ol class="priority-sequence">
+  <li>First satisfy <strong>Constraints</strong></li>
+  <li>Then maximize <strong>Task Success</strong></li>
+  <li>Finally optimize <strong>Preference and Cost</strong></li>
+</ol>
 
 This matches the real structure of tasks and training needs better than "tuning one weight per metric".
 

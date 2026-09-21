@@ -1,116 +1,90 @@
 ---
 layout: research
 permalink: /
-title: "About Me"
+title: "AI Researcher | Post-training & LLM Agents"
+description: "Yi Jing is an AI researcher at Tsinghua University and a research intern at Tencent Hy, working on LLM post-training, reinforcement learning, and agents. Explore publications and research notes."
 author_profile: false
 redirect_from:
   - /about/
   - /about.html
 ---
 
-<section class="research-hero research-reveal">
-  <div>
+<section class="profile">
+  <div class="profile__intro">
+    <p class="eyebrow">AI researcher / Beijing</p>
     <h1>Yi Jing</h1>
-    <p class="research-hero__tagline">AI researcher · Tsinghua University · research intern at Tencent Hy</p>
-    <p class="research-lead">
-      I'm a fourth-year undergraduate student at Tsinghua University and an incoming PhD student at the Institute of Computational Linguistics, Peking University, advised by Prof. <a href="https://scholar.google.com/citations?hl=zh-CN&amp;user=y2EaftAAAAAJ&amp;view_op=list_works">Zhifang Sui</a>. I'm currently a Research Intern (Project UP) at Tencent Hy's Large Language Model Department, working on <strong>post-training and LLM agents</strong>.
-    </p>
-    <p class="research-hero__meta">
-      Xinya College &amp; Computer Science, Tsinghua University. Based in Beijing, China.
-    </p>
-    <div class="research-pills">
-      <a href="mailto:jingy22@mails.tsinghua.edu.cn">Email</a>
-      <a href="https://github.com/Yii-Jing">GitHub</a>
-      <a href="/publications/">Publications</a>
-      <a href="/blogs/">Blogs</a>
+    <p class="profile__focus">Post-training, agents, and how language models learn.</p>
+    <p>I'm a fourth-year undergraduate at <strong>Tsinghua University</strong> and an incoming PhD student at Peking University's Institute of Computational Linguistics, advised by Prof. <a href="https://scholar.google.com/citations?hl=zh-CN&amp;user=y2EaftAAAAAJ&amp;view_op=list_works">Zhifang Sui</a>.</p>
+    <p>Currently, I'm a research intern at <strong>Tencent Hy</strong> (Project UP), working on post-training and LLM agents.</p>
+    <div class="profile__links">
+      <a href="mailto:jingy22@mails.tsinghua.edu.cn"><i class="fas fa-envelope" aria-hidden="true"></i> Email</a>
+      <a href="https://github.com/Yii-Jing"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a>
     </div>
   </div>
-  <figure class="research-hero__photo">
-    <img class="research-portrait" src="/images/jingyi.jpg" alt="Yi Jing">
+  <figure class="profile__portrait">
+    <img src="{{ '/images/jingyi.jpg' | relative_url }}" alt="Yi Jing" width="176" height="200" fetchpriority="high">
+    <figcaption>Beijing, China</figcaption>
   </figure>
 </section>
 
-<section class="research-section research-reveal">
-  <div class="research-section__head">
-    <h2><span class="research-section__index">01</span>About</h2>
+<section class="home-section">
+  <div class="section-heading">
+    <h2>Selected research</h2>
+    <a class="quiet-link" href="{{ '/publications/' | relative_url }}">All publications <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
   </div>
-  <div class="research-list">
-    <article class="research-item">
-      <p class="research-item__meta">Education</p>
-      <h3>Tsinghua University</h3>
-      <p>Fourth-year undergraduate in Xinya College and the Department of Computer Science. Incoming PhD at the Institute of Computational Linguistics, Peking University, advised by Prof. <a href="https://scholar.google.com/citations?hl=zh-CN&amp;user=y2EaftAAAAAJ&amp;view_op=list_works">Zhifang Sui</a>.</p>
-    </article>
-    <article class="research-item">
-      <p class="research-item__meta">Now</p>
-      <h3>Tencent Hy</h3>
-      <p>Research Intern (Project UP) at the Large Language Model Department.</p>
-    </article>
-    <article class="research-item">
-      <p class="research-item__meta">Previously</p>
-      <ul class="research-clean-list">
-        <li><strong><a href="https://keg.cs.tsinghua.edu.cn/">THUKEG</a>, Tsinghua University</strong> — interpretability and reinforcement learning, with Prof. <a href="https://keg.cs.tsinghua.edu.cn/persons/ljz/index.html">Juanzi Li</a>.</li>
-        <li><strong><a href="https://www.umiacs.umd.edu/labs/clip">CLIP Lab</a>, University of Maryland</strong> — human-centered AI, with Prof. <a href="https://boydgraber.org/">Jordan Boyd-Graber</a>.</li>
-        <li><strong><a href="https://brain.tsinghua.edu.cn/">THBI</a>, Tsinghua University</strong> — AI for neuroscience, with Prof. <a href="https://birthlab.github.io/en/index.html">Qiyuan Tian</a>.</li>
-        <li><strong><a href="https://www.fmrib.ox.ac.uk/">FMRIB</a>, Oxford University</strong> — AI for neuroscience, with Prof. <a href="https://www.win.ox.ac.uk/people/wenchuan-wu">Wenchuan Wu</a>.</li>
-      </ul>
-    </article>
+  <div class="publication-list">
+    {% assign selected = site.publications | where: 'featured', true | sort: 'date' | reverse %}
+    {% for paper in selected %}
+      <article class="publication-row">
+        <div class="publication-row__year">{{ paper.date | date: '%Y' }}</div>
+        <div class="publication-row__body">
+          <h3><a href="{{ paper.url | relative_url }}">{{ paper.title }}</a></h3>
+          <p class="publication-row__venue">{{ paper.venue }}</p>
+          <div class="research-link-group">
+            {% for link in paper.links %}<a href="{{ link.url }}">{{ link.label }} <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>{% endfor %}
+          </div>
+        </div>
+      </article>
+    {% endfor %}
   </div>
 </section>
 
-<section class="research-section research-reveal">
-  <div class="research-section__head">
-    <h2><span class="research-section__index">02</span>Research</h2>
+<section class="home-section">
+  <div class="section-heading">
+    <h2>Latest writing</h2>
+    <a class="quiet-link" href="{{ '/blogs/' | relative_url }}">All writing <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
   </div>
-  <div class="research-list">
-    <article class="research-item research-item--stack research-item--compact">
-      <h3>Post-training</h3>
-      <p>Enhancing downstream performance through methods such as reinforcement learning, with a particular focus on improving model productivity on complex tasks.</p>
+  {% assign latest_posts = site.posts | where: 'lang', 'en' | sort: 'date' | reverse %}
+  {% assign current_timestamp = site.time | date: '%s' | plus: 0 %}
+  {% assign recent_cutoff = current_timestamp | minus: 31536000 %}
+  {% assign recent_posts_shown = 0 %}
+  {% for post in latest_posts %}
+    {% assign post_timestamp = post.date | date: '%s' | plus: 0 %}
+    {% if post_timestamp >= recent_cutoff and post_timestamp <= current_timestamp %}
+    <article class="home-post" lang="{{ post.lang }}">
+      <div class="post-meta"><span class="post-kind {% if post.kind == 'essay' %}post-kind--essay{% endif %}">{{ post.kind_label }}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time></div>
+      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+      <p>{{ post.excerpt | strip_html }}</p>
     </article>
-    <article class="research-item research-item--stack research-item--compact">
-      <h3>LLM agents</h3>
-      <p>Building and improving LLM-based agents — how they plan, use tools, and act reliably on complex, long-horizon tasks.</p>
-    </article>
-  </div>
+    {% assign recent_posts_shown = recent_posts_shown | plus: 1 %}
+    {% if recent_posts_shown == 2 %}{% break %}{% endif %}
+    {% endif %}
+  {% endfor %}
 </section>
 
-<section class="research-section research-reveal">
-  <div class="research-section__head">
-    <h2><span class="research-section__index">03</span>News</h2>
+<section class="home-section home-background">
+  <div>
+    <h2>Background</h2>
+    <p>Xinya College &amp; Computer Science, Tsinghua University.</p>
+    <p>Previously, I worked on interpretability and reinforcement learning at <a href="https://keg.cs.tsinghua.edu.cn/">THUKEG</a>, human-centered AI at Maryland's <a href="https://www.umiacs.umd.edu/labs/clip">CLIP Lab</a>, and AI for neuroscience at <a href="https://brain.tsinghua.edu.cn/">THBI</a> and Oxford's <a href="https://www.fmrib.ox.ac.uk/">FMRIB</a>.</p>
+    <details class="background-details">
+      <summary>Collaborators &amp; mentors</summary>
+      <p>Prof. <a href="https://keg.cs.tsinghua.edu.cn/persons/ljz/index.html">Juanzi Li</a> (THUKEG), Prof. <a href="https://boydgraber.org/">Jordan Boyd-Graber</a> (CLIP), Prof. <a href="https://birthlab.github.io/en/index.html">Qiyuan Tian</a> (THBI), and Prof. <a href="https://www.win.ox.ac.uk/people/wenchuan-wu">Wenchuan Wu</a> (FMRIB).</p>
+    </details>
   </div>
-  <div class="research-list research-list--timeline">
-    <article class="research-item research-item--compact">
-      <p class="research-item__meta">August 28–30, 2026</p>
-      <h3>AI4Humanities 2026</h3>
-      <p>I will attend AI4Humanities 2026 in Shanghai.</p>
-    </article>
-  </div>
-</section>
-
-<section class="research-section research-reveal">
-  <div class="research-section__head">
-    <h2><span class="research-section__index">04</span>Explore</h2>
-  </div>
-  <div class="research-cards">
-    <a class="research-card" href="/publications/">
-      <div>
-        <h3>Publications</h3>
-        <p>Papers &amp; preprints, grouped by year, with links.</p>
-      </div>
-      <span class="research-card__arrow">&rarr;</span>
-    </a>
-    <a class="research-card" href="/blogs/">
-      <div>
-        <h3>Blogs</h3>
-        <p>Notes, essays, and research-adjacent writing.</p>
-      </div>
-      <span class="research-card__arrow">&rarr;</span>
-    </a>
-    <a class="research-card" href="/honors/">
-      <div>
-        <h3>Honors</h3>
-        <p>Scholarships, fellowships, grants, and programs.</p>
-      </div>
-      <span class="research-card__arrow">&rarr;</span>
-    </a>
+  <div class="home-note">
+    <h2>On the calendar</h2>
+    <time datetime="2026-08-28">August 28–30, 2026</time>
+    <p>AI4Humanities 2026<br>Shanghai, China</p>
   </div>
 </section>

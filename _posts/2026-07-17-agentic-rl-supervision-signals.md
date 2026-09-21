@@ -4,6 +4,12 @@ date: 2026-07-17
 permalink: /posts/2026/07/agentic-rl-supervision-signals/
 lang: zh
 translation_key: agentic-rl-supervision-signals
+kind: research
+reading_minutes: 28
+kind_label: 研究笔记
+subtitle: "从 Reward、State、Credit 理解 Agent 训练闭环"
+toc: true
+math: true
 excerpt: "从 Reward、State、Credit 三个角度理解 Agent 训练闭环：Reward 决定学习方向，State 决定训练发生的位置，Credit 决定结果归因于哪些行动。"
 tags:
   - Post-training
@@ -11,11 +17,15 @@ tags:
   - Reinforcement Learning
 ---
 
-> **从 Reward、State、Credit 理解 Agent 训练闭环**
-
 ## TL;DR
 
-Agent 训练可以从 Reward、State 和 Credit 三个问题展开：如何用环境结果定义目标，如何让训练数据覆盖当前策略实际访问的状态，以及如何把延迟 Outcome 归因到具体动作。三者共同决定训练闭环能否产生可靠、可持续的学习信号。
+<dl class="concept-map">
+  <div><dt><span>01</span> Reward</dt><dd>用真实环境结果定义目标，决定策略应该学习什么。</dd></div>
+  <div><dt><span>02</span> State</dt><dd>覆盖当前策略实际访问的状态，让训练与部署相接。</dd></div>
+  <div><dt><span>03</span> Credit</dt><dd>把延迟结果归因到具体行动，找到真正值得强化的决策。</dd></div>
+</dl>
+
+三者共同决定训练闭环能否产生可靠、可持续的学习信号。
 
 ---
 
@@ -266,13 +276,11 @@ Proxy 最合适的角色是 Gate、诊断指标或成功轨迹内部的次级目
 
 训练时可以使用层级目标：
 
-$$
-\text{先满足 Constraints}
-\;\rightarrow\;
-\text{再最大化 Task Success}
-\;\rightarrow\;
-\text{最后优化 Preference 与 Cost}
-$$
+<ol class="priority-sequence">
+  <li>先满足 <strong>Constraints</strong></li>
+  <li>再最大化 <strong>Task Success</strong></li>
+  <li>最后优化 <strong>Preference 与 Cost</strong></li>
+</ol>
 
 这比“为每项指标调一个权重”更符合真实的任务结构和训练需求。
 

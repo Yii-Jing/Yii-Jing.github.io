@@ -4,6 +4,10 @@ date: 2024-12-31
 permalink: /posts/2024/12/blog-post-1-en/
 lang: en
 translation_key: first-voice-illusion
+kind: essay
+reading_minutes: 5
+kind_label: Essay
+excerpt: "Why does a thought sometimes arrive only after we speak? On language, consciousness, and finding the desire to write again."
 tags:
   - Musings
 ---

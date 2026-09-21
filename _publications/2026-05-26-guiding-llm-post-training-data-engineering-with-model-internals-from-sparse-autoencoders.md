@@ -1,6 +1,7 @@
 ---
 title: "Guiding LLM Post-training Data Engineering with Model Internals from Sparse Autoencoders"
 collection: publications
+featured: true
 category: manuscripts
 permalink: /publication/2026-05-26-guiding-llm-post-training-data-engineering-with-model-internals-from-sparse-autoencoders
 excerpt: 'A sparse autoencoder-guided framework for using model internals to engineer post-training data for LLM reinforcement learning.'

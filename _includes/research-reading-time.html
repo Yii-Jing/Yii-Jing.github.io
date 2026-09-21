@@ -1,0 +1,9 @@
+{%- assign reading_minutes = include.post.reading_minutes -%}
+{%- unless reading_minutes -%}
+  {%- if include.post.lang == 'zh' -%}
+    {%- assign reading_minutes = include.post.content | strip_html | size | divided_by: 500.0 | ceil | at_least: 1 -%}
+  {%- else -%}
+    {%- assign reading_minutes = include.post.content | strip_html | number_of_words | divided_by: 220.0 | ceil | at_least: 1 -%}
+  {%- endif -%}
+{%- endunless -%}
+{{- reading_minutes -}}{% if include.post.lang == 'zh' %} 分钟{% else %} min read{% endif %}

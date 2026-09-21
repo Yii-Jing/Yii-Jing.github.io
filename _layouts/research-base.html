@@ -1,0 +1,37 @@
+---
+layout: compress
+---
+<!doctype html>
+<html lang="{{ page.lang | default: 'en' }}" class="research-document{% if page.toc %} has-toc{% endif %}">
+  <head>
+    {% include head.html %}
+    <link rel="icon" href="{{ '/images/favicon.ico' | relative_url }}">
+    <meta name="color-scheme" content="light dark">
+    <script>
+      try {
+        var preference = localStorage.getItem('yi-theme');
+        if (preference === 'light' || preference === 'dark') document.documentElement.dataset.theme = preference;
+      } catch (error) {}
+    </script>
+    {% if page.math %}
+      <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    {% endif %}
+    <script defer src="{{ '/assets/js/research.js' | relative_url }}"></script>
+  </head>
+  <body class="research-theme">
+    <a class="skip-link" href="#content">Skip to content</a>
+    {% include research-nav.html %}
+    {{ content }}
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <span>&copy; {{ site.time | date: '%Y' }} Yi Jing</span>
+        <nav aria-label="Footer">
+          <a href="mailto:jingy22@mails.tsinghua.edu.cn">Email</a>
+          <a href="https://github.com/Yii-Jing">GitHub</a>
+          <a href="{{ '/feed.xml' | relative_url }}">RSS <i class="fas fa-rss" aria-hidden="true"></i></a>
+        </nav>
+      </div>
+    </footer>
+    {% include analytics.html %}
+  </body>
+</html>

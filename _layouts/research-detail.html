@@ -1,91 +1,73 @@
 ---
-layout: default
+layout: research-base
 ---
+{% assign is_publication = false %}
+{% if page.collection == 'publications' %}{% assign is_publication = true %}{% endif %}
+{% assign is_chinese = false %}
+{% if page.lang == 'zh' %}{% assign is_chinese = true %}{% endif %}
 
-{% include base_path %}
-
-<main class="research-site research-detail" role="main">
-  <article class="research-detail__article" itemscope itemtype="http://schema.org/CreativeWork">
-    <header class="research-detail__header">
-      {% if page.collection == 'publications' %}
-        <p class="research-eyebrow">Publication</p>
-      {% else %}
-        <p class="research-eyebrow">Writing</p>
-      {% endif %}
-
-      <h1 itemprop="headline">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</h1>
-
-      <div class="research-detail__meta">
-        {% if page.collection == 'publications' and page.venue %}
-          <span class="research-detail__meta-item">{{ page.venue }}</span>
-        {% endif %}
-        {% if page.date %}
-          <time class="research-detail__meta-item" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
-        {% endif %}
-        {% if page.collection != 'publications' and page.tags and page.tags.size > 0 %}
-          {% for tag in page.tags %}
-            {% unless tag == "Chinese" or tag == "English" %}
-              <span class="research-detail__meta-item">{{ tag }}</span>
-            {% endunless %}
-          {% endfor %}
-        {% endif %}
+<main id="content" class="reading-layout {% if page.toc %}reading-layout--with-toc{% endif %}" tabindex="-1">
+  <article class="reading-article" itemscope itemtype="https://schema.org/Article">
+    <header class="article-header">
+      <a class="article-back" href="{% if is_publication %}{{ '/publications/' | relative_url }}{% else %}{{ '/blogs/' | relative_url }}{% endif %}"><i class="fas fa-arrow-left" aria-hidden="true"></i> {% if is_publication %}Publications{% elsif is_chinese %}全部文章{% else %}All writing{% endif %}</a>
+      <div class="post-meta"><span class="post-kind {% if page.kind == 'essay' %}post-kind--essay{% endif %}">{% if is_publication %}{{ page.venue }}{% else %}{{ page.kind_label | default: 'Writing' }}{% endif %}</span></div>
+      <h1 itemprop="headline">{{ page.title }}</h1>
+      {% if page.subtitle %}<p class="article-subtitle">{{ page.subtitle }}</p>{% endif %}
+      <div class="article-byline">
+        <span>{% if is_publication %}{{ page.authors }}{% else %}Yi Jing{% endif %}</span>
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y.%m.%d' }}</time>
+        {% unless is_publication %}<span>{% include research-reading-time.html post=page %}</span>{% endunless %}
       </div>
-
-      {% if page.collection != 'publications' and page.translation_key %}
-        {% assign zh_post = false %}
-        {% assign en_post = false %}
-        {% for candidate in site.posts %}
-          {% if candidate.translation_key == page.translation_key %}
-            {% if candidate.lang == "en" %}
-              {% assign en_post = candidate %}
-            {% else %}
-              {% assign zh_post = candidate %}
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-        {% if zh_post and en_post %}
-          <nav class="research-language-switch research-language-switch--detail" aria-label="Language versions">
-            <span class="research-language-switch__icon" aria-hidden="true">文</span>
-            {% if zh_post %}
-              <a href="{{ zh_post.url | relative_url }}" {% if page.url == zh_post.url %}aria-current="page"{% endif %}>中</a>
-            {% endif %}
-            {% if en_post %}
-              <a href="{{ en_post.url | relative_url }}" {% if page.url == en_post.url %}aria-current="page"{% endif %}>EN</a>
-            {% endif %}
+      <div class="article-actions">
+        {% if page.translation_key %}
+          <nav class="article-languages" aria-label="{% if is_chinese %}文章语言{% else %}Article language{% endif %}">
+            {% assign translations = site.posts | where: 'translation_key', page.translation_key | sort: 'lang' | reverse %}
+            {% for translation in translations %}<a href="{{ translation.url | relative_url }}" lang="{{ translation.lang }}" hreflang="{{ translation.lang }}" {% if translation.url == page.url %}aria-current="page"{% endif %}>{% if translation.lang == 'zh' %}中文{% else %}English{% endif %}</a>{% endfor %}
           </nav>
         {% endif %}
-      {% endif %}
-
-      {% if page.collection == 'publications' and page.authors %}
-        <p class="research-detail__authors">{{ page.authors }}</p>
-      {% endif %}
-
-      {% if page.collection == 'publications' %}
-        <div class="research-link-group research-detail__actions">
-          {% if page.links %}
-            {% for link in page.links %}
-              <a href="{{ link.url }}">{{ link.label }}</a>
-            {% endfor %}
-          {% else %}
-            {% if page.paperurl %}<a href="{{ page.paperurl }}">Paper</a>{% endif %}
-            {% if page.codeurl %}<a href="{{ page.codeurl }}">Code</a>{% endif %}
-            {% if page.dataseturl %}<a href="{{ page.dataseturl }}">Dataset</a>{% endif %}
-            {% if page.slidesurl %}<a href="{{ page.slidesurl }}">Slides</a>{% endif %}
-          {% endif %}
-        </div>
-      {% endif %}
+        {% if is_publication %}<div class="research-link-group">{% for link in page.links %}<a href="{{ link.url }}">{{ link.label }} <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>{% endfor %}</div>{% else %}
+          <div class="reading-tools" hidden>
+            <button class="icon-button" type="button" data-text-size="decrease" aria-label="{% if is_chinese %}缩小字号{% else %}Decrease text size{% endif %}" title="{% if is_chinese %}缩小字号{% else %}Decrease text size{% endif %}"><i class="fas fa-minus" aria-hidden="true"></i></button>
+            <button class="icon-button" type="button" data-text-size="increase" aria-label="{% if is_chinese %}放大字号{% else %}Increase text size{% endif %}" title="{% if is_chinese %}放大字号{% else %}Increase text size{% endif %}"><i class="fas fa-plus" aria-hidden="true"></i></button>
+            <button class="icon-button" type="button" data-copy-link aria-label="{% if is_chinese %}复制文章链接{% else %}Copy article link{% endif %}" title="{% if is_chinese %}复制文章链接{% else %}Copy article link{% endif %}"><i class="fas fa-link" aria-hidden="true"></i></button>
+          </div>
+        {% endif %}
+      </div>
+      <span class="action-status" role="status" aria-live="polite"></span>
     </header>
 
-    <section class="research-detail__content" itemprop="text">
-      {{ content }}
-    </section>
+    {% if page.toc %}
+      <details class="mobile-toc" hidden>
+        <summary>{% if is_chinese %}目录{% else %}Contents{% endif %}<i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+        <nav aria-label="{% if is_chinese %}文章目录{% else %}Table of contents{% endif %}" data-toc></nav>
+      </details>
+    {% endif %}
 
-    <footer class="research-detail__footer">
-      {% if page.collection == 'publications' %}
-        <a class="research-detail__back" href="{{ '/publications/' | relative_url }}">Back to Publications</a>
-      {% else %}
-        <a class="research-detail__back" href="{{ '/blogs/' | relative_url }}">Back to Blogs</a>
-      {% endif %}
+    <div class="article-content" itemprop="articleBody">
+      {{ content }}
+    </div>
+
+    <footer class="article-footer">
+      {% unless is_publication %}
+        <p class="article-signoff">Yi Jing <span>·</span> {% if is_chinese %}研究、语言与思考{% else %}Research, language &amp; ideas{% endif %}</p>
+        {% assign same_language = site.posts | where: 'lang', page.lang %}
+        {% for next_post in same_language %}
+          {% unless next_post.translation_key == page.translation_key %}
+            <a class="next-article" href="{{ next_post.url | relative_url }}"><span>{% if is_chinese %}继续阅读{% else %}Keep reading{% endif %}</span><strong>{{ next_post.title }}</strong><i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            {% break %}
+          {% endunless %}
+        {% endfor %}
+      {% endunless %}
+      <a class="quiet-link" href="{% if is_publication %}{{ '/publications/' | relative_url }}{% else %}{{ '/blogs/' | relative_url }}{% endif %}"><i class="fas fa-arrow-left" aria-hidden="true"></i> {% if is_publication %}All publications{% elsif is_chinese %}全部文章{% else %}All writing{% endif %}</a>
     </footer>
   </article>
+  {% if page.toc %}
+    <aside class="article-toc" hidden>
+      <div class="article-toc__inner">
+        <p>{% if is_chinese %}本文目录{% else %}On this page{% endif %}</p>
+        <nav aria-label="{% if is_chinese %}文章目录{% else %}Table of contents{% endif %}" data-toc></nav>
+        <a class="toc-top" href="#content"><i class="fas fa-arrow-up" aria-hidden="true"></i> {% if is_chinese %}回到顶部{% else %}Back to top{% endif %}</a>
+      </div>
+    </aside>
+  {% endif %}
 </main>
