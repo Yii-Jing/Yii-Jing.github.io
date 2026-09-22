@@ -1,0 +1,31 @@
+.jev-article figure { display: block; }
+.jev-article .image-figure { margin: 28px 0; }
+.jev-article .image-open { display: block; cursor: zoom-in; }
+.jev-article .image-open img { width: 100%; height: auto; }
+.jev-article .screenshot .image-open { max-width: 540px; margin: auto; }
+.jev-article figcaption { margin: 12px 0 0; font: 13px/1.85 var(--ui-font); color: var(--muted); }
+.jev-article .table-wrap { max-width: 100%; overflow: auto; margin: 24px 0; }
+.jev-article .table-wrap table { display: table; width: 100%; min-width: 540px; font-size: 13px; line-height: 1.7; margin: 0; }
+.jev-article .numeric { text-align: right; font-variant-numeric: tabular-nums; }
+.jev-article .citation { font-size: 12px; vertical-align: super; white-space: nowrap; margin-left: 3px; }
+.jev-article .flow { margin: 30px 0; padding: 22px 0; border-block: 1px solid var(--line); }
+.jev-article .flow-title { font-size: 19px; line-height: 1.5; font-weight: 600; margin-bottom: 20px; }
+.jev-article .flow-title > span { display: block; font-size: 11px; color: var(--research); margin-bottom: 6px; }
+.jev-article .flow-node { padding: 13px; border: 1px solid var(--line); border-radius: 4px; text-align: center; background: var(--surface); overflow-wrap: anywhere; }
+.jev-article .flow-node strong { display: block; font-size: 14px; line-height: 1.6; }
+.jev-article .flow-node span { display: block; font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+.jev-article .flow-node.accent { border-color: var(--research); }
+.jev-article .flow-node.source { border-color: var(--link); }
+.jev-article .flow-branches { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.jev-article .source-branch { display: flex; align-items: center; }
+.jev-article .source-branch > div { width: 100%; }
+.jev-article .flow-arrow { text-align: center; color: var(--muted); height: 30px; line-height: 30px; }
+.jev-article .flow-loop { text-align: center; font-size: 12px; color: var(--research); margin-top: 16px; }
+.jev-article .references-heading ~ ol { font-size: 14px; }
+.jev-article li:target { background: var(--selection); }
+@media(max-width: 600px) {
+  .jev-article .flow-branches { gap: 10px; }
+  .jev-article .flow-node { padding: 10px 7px; }
+  .jev-article .flow-node strong { font-size: 12px; }
+  .jev-article .flow-node span { font-size: 11px; }
+}
