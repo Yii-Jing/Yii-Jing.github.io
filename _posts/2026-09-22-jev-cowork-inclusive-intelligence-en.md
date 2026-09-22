@@ -9,9 +9,7 @@ translation_key: jev-cowork-inclusive-intelligence
 kind: research
 kind_label: Research essay
 toc: true
-excerpt: Can low-cost, low-latency professional judgment broaden evidence coverage
-  and sustain research over time? Experiments in action selection, evidence organization,
-  and continuous monitoring explore the capabilities, costs, and limits of Jev Cowork.
+excerpt: "Can low-cost, low-latency professional judgment broaden evidence coverage and sustain research over time? Jev Cowork explores a simple idea: the value of a quick judgment grows when it connects to other evidence, shapes the next question, and remains available for future research."
 tags:
 - Agents
 - AI for Research
