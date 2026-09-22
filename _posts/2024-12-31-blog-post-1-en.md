@@ -1,7 +1,7 @@
 ---
 title: 'The Illusion of the First Voice: On Language, Thought, and Expression'
 date: 2024-12-31
-permalink: /posts/2024/12/blog-post-1-en/
+permalink: /posts/first-voice/
 lang: en
 translation_key: first-voice-illusion
 kind: essay

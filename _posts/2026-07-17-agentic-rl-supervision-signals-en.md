@@ -1,7 +1,7 @@
 ---
 title: "How Agents Learn from Environments and Feedback"
 date: 2026-07-17
-permalink: /posts/2026/07/agentic-rl-supervision-signals-en/
+permalink: /posts/agent-learning/
 lang: en
 translation_key: agentic-rl-supervision-signals
 kind: research

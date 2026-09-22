@@ -1,7 +1,7 @@
 ---
 title: "Agent 如何在环境和反馈中学习"
 date: 2026-07-17
-permalink: /posts/2026/07/agentic-rl-supervision-signals/
+permalink: /posts/agent-learning-zh/
 lang: zh
 translation_key: agentic-rl-supervision-signals
 kind: research

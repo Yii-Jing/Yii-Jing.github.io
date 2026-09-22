@@ -3,7 +3,7 @@ layout: research-detail
 title: Scaling System 1 towards Inclusive Intelligence
 subtitle: Introducing Jev Cowork
 date: '2026-09-22'
-permalink: "/posts/2026/09/jev-cowork-inclusive-intelligence-en/"
+permalink: /posts/jev-cowork/
 lang: en
 translation_key: jev-cowork-inclusive-intelligence
 kind: research
