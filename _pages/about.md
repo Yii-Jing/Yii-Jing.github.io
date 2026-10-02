@@ -55,12 +55,13 @@ redirect_from:
     <a class="quiet-link" href="{{ '/blogs/' | relative_url }}">All writing <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
   </div>
   {% assign latest_posts = site.posts | where: 'lang', 'en' | sort: 'date' | reverse %}
-  {% assign current_timestamp = site.time | date: '%s' | plus: 0 %}
-  {% assign recent_cutoff = current_timestamp | minus: 31536000 %}
+  {% assign latest_post = latest_posts | first %}
+  {% assign latest_timestamp = latest_post.date | date: '%s' | plus: 0 %}
+  {% assign recent_cutoff = latest_timestamp | minus: 31536000 %}
   {% assign recent_posts_shown = 0 %}
   {% for post in latest_posts %}
     {% assign post_timestamp = post.date | date: '%s' | plus: 0 %}
-    {% if post_timestamp >= recent_cutoff and post_timestamp <= current_timestamp %}
+    {% if post_timestamp >= recent_cutoff %}
     <article class="home-post" lang="{{ post.lang }}">
       <div class="post-meta"><span class="post-kind {% if post.kind == 'essay' %}post-kind--essay{% endif %}">{{ post.kind_label }}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time></div>
       <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
