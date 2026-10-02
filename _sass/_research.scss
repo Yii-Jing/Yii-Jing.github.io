@@ -197,8 +197,23 @@
 .article-content mjx-container[display="true"] { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 6px 0; }
 .article-content img { display: block; max-width: 100%; height: auto; }
 .article-content table { display: block; overflow-x: auto; max-width: 100%; font-size: 14px; border-collapse: collapse; }
-.article-content th, .article-content td { border-color: var(--line); padding: 10px 12px; }
-.article-content th { background: var(--surface); }
+.article-table-scroll { width: 100%; max-width: 100%; overflow-x: auto; margin: 24px 0; border: 1px solid var(--line); border-radius: 4px; }
+.article-content .article-table-scroll table { display: table; width: 100%; max-width: none; margin: 0; border: 0; font-family: var(--ui-font); font-size: 13px; line-height: 1.65; font-variant-numeric: tabular-nums; }
+.article-content th, .article-content td { border: 0; border-bottom: 1px solid var(--line); padding: 12px 16px; vertical-align: middle; }
+.article-content thead { background: var(--surface); border: 0; }
+.article-content th { background: var(--surface); color: var(--ink); font-weight: 600; white-space: nowrap; word-break: normal; overflow-wrap: normal; }
+.article-content td { white-space: nowrap; }
+.article-content td:first-child { white-space: normal; min-width: 150px; }
+.article-content tbody tr:last-child td { border-bottom: 0; }
+.article-content tbody tr:nth-child(even) { background: var(--surface); }
+.article-content .article-table-scroll table:has(th:nth-child(6)) { min-width: 700px; font-size: 12px; }
+.article-content table:has(th:nth-child(6)) th, .article-content table:has(th:nth-child(6)) td { padding: 12px 10px; }
+.article-content table:has(th:nth-child(6)) td:first-child { min-width: 120px; }
+@media print {
+  .article-table-scroll { overflow: visible; }
+  .article-content .article-table-scroll table:has(th:nth-child(6)) { min-width: 0; }
+  .article-content .article-table-scroll th, .article-content .article-table-scroll td { white-space: normal; min-width: 0; padding: 6px; }
+}
 .research-theme .heading-anchor { margin-left: 8px; font-size: 13px; color: var(--muted); opacity: 0; text-decoration: none; }
 .article-content h2:hover .heading-anchor, .article-content h3:hover .heading-anchor, .heading-anchor:focus { opacity: 1; }
 .article-content .concept-map { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: 16px 0 22px; padding: 20px 0; border-top: 2px solid var(--research); border-bottom: 1px solid var(--line); }

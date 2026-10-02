@@ -63,6 +63,19 @@
   var article = document.querySelector('.article-content');
   if (!article) return;
 
+  article.querySelectorAll('table').forEach(function (table, index) {
+    var wrapper = document.createElement('div');
+    wrapper.className = 'article-table-scroll';
+    wrapper.tabIndex = 0;
+    wrapper.setAttribute('role', 'region');
+    wrapper.setAttribute('aria-label', (chinese ? '表格 ' : 'Table ') + (index + 1));
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+    table.querySelectorAll('thead th').forEach(function (cell) {
+      cell.setAttribute('scope', 'col');
+    });
+  });
+
   var tools = document.querySelector('.reading-tools');
   var status = document.querySelector('.action-status');
   if (tools) {
